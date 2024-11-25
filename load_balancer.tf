@@ -14,6 +14,16 @@ resource "aws_lb_target_group" "prod_target_group" {
 	protocol = "HTTP" 
 	target_type = "instance" 
 	vpc_id = aws_vpc.devops_vpc.id
+
+	health_check {
+		interval = 30
+		path = "/"
+		port = "80"
+		protocol = "HTTP"
+		timeout = 5
+		healthy_threshold = 2
+		unhealthy_threshold = 2
+	}
 }
 
 resource "aws_lb_listener" "prod_listener" { 
